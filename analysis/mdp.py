@@ -101,47 +101,45 @@ def policy_iteration(problem, R=None, T=None, gamma=0.9, max_iterations=10**6, d
     return policy, i + 1
 
 def print_policy(policy, mapping=None, shape=(0,)):
-    print np.array([mapping[action] for action in policy]).reshape(shape)
+    print(np.array([mapping[action] for action in policy]).reshape(shape))
 
 def run_discrete(environment_name, mapping, shape=None):
     problem = gym.make(environment_name)
-    print '== {} =='.format(environment_name)
-    print 'Actions:', problem.env.action_space.n
-    print 'States:', problem.env.observation_space.n
-    print problem.env.desc
-    print
+    print('== {} =='.format(environment_name))
+    print('Actions:', problem.env.action_space.n)
+    print('States:', problem.env.observation_space.n)
+    print(problem.env.des)
+    print()
 
-    print '== Value Iteration =='
+    print('== Value Iteration ==')
     value_policy, iters = value_iteration(problem)
-    print 'Iterations:', iters
-    print
+    print('Iterations:', iters)
+    print()
 
-    print '== Policy Iteration =='
+    print('== Policy Iteration ==')
     policy, iters = policy_iteration(problem)
-    print 'Iterations:', iters
-    print
+    print('Iterations:', iters)
+    print()
 
     diff = sum([abs(x-y) for x, y in zip(policy.flatten(), value_policy.flatten())])
     if diff > 0:
-        print 'Discrepancy:', diff
-        print
+        print('Discrepancy:', diff)
+        print()
 
     if shape is not None:
-        print '== Policy =='
+        print('== Policy ==')
         print_policy(policy, mapping, shape)
-        print
+        print()
 
     return policy
 
+print('Running Value and Policy iteration on Frozen Lake SMALL')
 # FROZEN LAKE SMALL
 mapping = {0: "L", 1: "D", 2: "R", 3: "U"}
 shape = (4, 4)
 run_discrete('FrozenLake-v0', mapping, shape)
 
+print('Running Value and Policy iteration on Frozen Lake LARGE')
 # FROZEN LAKE LARGE
 shape = (8, 8)
 run_discrete('FrozenLake8x8-v0', mapping ,shape)
-
-# TAXI
-mapping = {0: "S", 1: "N", 2: "E", 3: "W", 4: "P", 5: "D"}
-run_discrete('Taxi-v2', mapping)

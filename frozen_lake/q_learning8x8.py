@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 
 # Environment initialization
 folder = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'q_learning')
-env = gym.wrappers.Monitor(gym.make('FrozenLake-v0'), folder, force=True)
+env = gym.wrappers.Monitor(gym.make('FrozenLake8x8-v0'), folder, force=True)
 
 # Q and rewards
 Q = np.zeros((env.observation_space.n, env.action_space.n))
@@ -43,8 +43,6 @@ for episode in xrange(episodes):
 
 # Close environment
 env.close()
-
-print('Took {} iterations'.format(len(iterations)))
 
 # Plot results
 def chunk_list(l, n):
